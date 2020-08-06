@@ -3,7 +3,7 @@
 using namespace std;
 
 char* getlogfilename();
-char* getlogfilepath(const char* filename);
+char* getlogfilepath(char* filename);
 void logger(string key);
 int getfilesize();
 wchar_t* ConvertCtoWC(char* str);

