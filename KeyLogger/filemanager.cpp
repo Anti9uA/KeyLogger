@@ -1,10 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define ULEN 200
+#define ULEN 50
 #include "stdafx.h"
 #include "filemanager.h"
 
 using namespace std;
-
 
 TCHAR username[ULEN] = { 0, };
 DWORD usersize = sizeof(username) / sizeof(username[0]);
@@ -29,17 +28,11 @@ char* getlogfilepath(char* filename) {
 	char dirpath[100] = "C:\\Users\\";
 	char filepath[100] = "C:\\Users\\";
 	static char filename2[100] = { 0, };
-	// sprintf(filename2, "%s", filename);
-	// PathAppend(LPWSTR(dirpath), LPWSTR(username));
-	// PathAppend(LPWSTR(dirpath), L"Appdata\\Roaming\\Windows");
 	strcat(dirpath, ConvertWCtoC(username));
 	strcat(dirpath, "\\Appdata\\Roaming\\Windows\\");
 	if (PathFileExists(LPWSTR(dirpath))==NULL) {
 		_mkdir(dirpath);
 	}
-	// PathAppend(LPWSTR(filepath), LPWSTR(username));
-	// PathAppend(LPWSTR(filepath), L"Appdata\\Roaming\\Windows");
-	// PathAppend(LPWSTR(filepath), LPCWSTR(filename));
 	strcat(filepath, ConvertWCtoC(username));
 	strcat(filepath, "\\Appdata\\Roaming\\Windows\\");
 	strcat(filepath, filename);
@@ -74,7 +67,6 @@ int getfilesize() {
 	return rst;
 }
 
-//wchar_t 에서 char 로의 형변환 함수
 char* ConvertWCtoC(wchar_t* str)
 {
 	//반환할 char* 변수 선언
@@ -92,8 +84,6 @@ char* ConvertWCtoC(wchar_t* str)
 	return pStr;
 }
 
-///////////////////////////////////////////////////////////////////////
-//char 에서 wchar_t 로의 형변환 함수
 wchar_t* ConverCtoWC(char* str)
 {
 	//wchar_t형 변수 선언
