@@ -21,15 +21,30 @@
     <ClCompile Include="filemanager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="malimanager.cpp">
+    <ClCompile Include="winmanager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="winmanager.cpp">
+    <ClCompile Include="mailmanager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="filemanager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="winmanager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyLogger.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
