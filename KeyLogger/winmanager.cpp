@@ -3,7 +3,8 @@ using namespace std;
 
 string gettitle() {
 	HWND handle = GetForegroundWindow();
-	char buffer[255];
-	GetWindowText(handle, LPWSTR(buffer), sizeof(buffer));
+	DWORD err = GetLastError();
+	char buffer[255] = { 0, };
+	GetWindowTextA(handle, buffer, sizeof(buffer));
 	return buffer;
 }
