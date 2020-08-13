@@ -6,5 +6,6 @@ char* getlogfilename();
 char* getlogfilepath(char* filename);
 void logger(string key);
 int getfilesize();
+void hidefile(char* file);
 wchar_t* ConvertCtoWC(char* str);
 char* ConvertWCtoC(wchar_t* str);

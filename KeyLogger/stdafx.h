@@ -7,6 +7,7 @@
 #include <vector>
 #include <chrono>
 #include <stdio.h>
+#include <WinSock2.h>
 #include <windows.h>
 #include <string>
 #include <fstream>
@@ -14,4 +15,4 @@
 #include <Shlwapi.h>
 #include <direct.h>
 #include <atlstr.h>
-
+using namespace std;

