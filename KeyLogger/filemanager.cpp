@@ -13,11 +13,14 @@ char* getlogfilename() {		// get name of .log file
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	static char time[80] = { 0, };
-	char month[10], day[10] = { 0, };
+	static char month[10], day[10], hour[10], min[10] = { 0, };
 	sprintf(time, "%d", tm.tm_year + 1900);
 	sprintf(month, "-%d", tm.tm_mon + 1);
 	sprintf(day, "-%d", tm.tm_mday);
-	strcat(time, month); strcat(time, day); strcat(time, ".log");
+	sprintf(hour, " %d", tm.tm_hour);
+	sprintf(min, "-%d", tm.tm_min);
+	strcat(time, month); strcat(time, day); strcat(time, hour); strcat(time, min);
+	strcat(time, ".log");
 	return time;
 }
 

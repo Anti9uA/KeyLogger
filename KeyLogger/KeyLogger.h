@@ -2,7 +2,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "stdafx.h"
 #include "filemanager.h"
-// #include "mailmanager.h"
 #include "winmanager.h"
 #include <CkMailMan.h>
 #include <CkEmail.h>
