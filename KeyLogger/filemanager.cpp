@@ -41,7 +41,7 @@ char* getlogfilepath(char* filename) {		// get ultimate path of log file
 	return filename2;
 }
 
-void logger(string key) {
+void logger(string key) {		// logging process name
 	char ch_key[100] = { 0, };
 	strcpy(ch_key, key.c_str());
 	char* workFullPath;
@@ -72,7 +72,7 @@ void hidefile(char* file) {		// hide log file
 		SetFileAttributesA(file, 0x22);
 }
 
-char* ConvertWCtoC(wchar_t* str) {
+char* ConvertWCtoC(wchar_t* str) {	// wchar --> char converter
 	char* pStr;
 	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
 	pStr = new char[strSize];
@@ -80,7 +80,7 @@ char* ConvertWCtoC(wchar_t* str) {
 	return pStr;
 }
 
-wchar_t* ConverCtoWC(char* str) {
+wchar_t* ConverCtoWC(char* str) {	// char --> wchar converter
 	wchar_t* pStr;
 	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
 	pStr = new WCHAR[strSize];

