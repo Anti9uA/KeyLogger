@@ -1,8 +1,8 @@
 # Simple Key1o99er Tr0jan 1n my w4y (C++)
-KeyLogger(C++) in my wayy
 
-**************** This program was developed for educational purposes. **************** 
-**************** Please dont use this program in any malicious activities. **************** 
+
+**************** This program was developed for educational purposes. Please dont use this program in any malicious activities. **************** 
+
 
 2020.08.14 Virustotal result
 
