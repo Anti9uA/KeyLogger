@@ -5,7 +5,7 @@ aka 키보드 도청 트로이 목마
 #### **************** Please dont use this program in any malicious activities. **************** 
 
 
-2020.08.14 Virustotal result
+2020.08.14 Virusotal result
 
 ![KakaoTalk_20210331_013743298](https://user-images.githubusercontent.com/52993882/113025408-e2d19100-91c2-11eb-912a-26b0a8021409.jpg)
 
