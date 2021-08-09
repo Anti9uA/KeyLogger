@@ -1,6 +1,5 @@
 #pragma once
-
-#include "targetver.h"
+// #include <SDKDDKVer.h>
 #include <iostream>
 #include <mutex> 
 #include <thread>
